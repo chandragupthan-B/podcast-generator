@@ -10,8 +10,10 @@ RUN apt-get update && apt-get install -y \
     libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN which python3 && python3 --version && pip3 --version
+
 # Install Python packages
-RUN pip3 install pyYAML
+RUN pip3 install pyyaml
 # Copy your scripts
 COPY feed.py /usr/bin/feed.py
 COPY entrypoint.sh /entrypoint.sh
