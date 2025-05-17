@@ -11,8 +11,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python packages
-RUN pip3 install pyyaml
-
+RUN pip3 install pyYAML
 # Copy your scripts
 COPY feed.py /usr/bin/feed.py
 COPY entrypoint.sh /entrypoint.sh
