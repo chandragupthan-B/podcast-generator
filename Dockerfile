@@ -1,7 +1,8 @@
 FROM ubuntu:latest
 
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Python, pip, and required build dependencies
+# Install Python 3.10 and required system packages
 RUN apt-get update && apt-get install -y \
     python3.10 \
     python3-pip \
@@ -10,15 +11,14 @@ RUN apt-get update && apt-get install -y \
     libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN which python3 && python3 --version && pip3 --version
+# Install Python package with override for PEP 668
+RUN pip3 install --break-system-packages pyyaml
 
-# Install Python packages
-RUN pip3 install pyyaml
-# Copy your scripts
+# Copy scripts
 COPY feed.py /usr/bin/feed.py
 COPY entrypoint.sh /entrypoint.sh
 
-# Ensure entrypoint is executable
+# Make entrypoint executable
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
